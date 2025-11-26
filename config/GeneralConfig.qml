@@ -9,5 +9,5 @@ JsonObject {
         property list<string> audio: ["pavucontrol"]
     }
 
-    property bool showDate: false
+    property list<string> disks: ["root", "home", "mnt/HDD"]
 }

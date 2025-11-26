@@ -30,7 +30,7 @@ PanelBase {
         spacing: Config.padding_large
 
         topPadding: Config.padding_large
-        bottomPadding: Config.visual.border.top / 2
+        bottomPadding: (Config.visual.border.top / 2) - (lastElement.height / 2)
 
         Column {
             height: volumeText.height + volumeSlider.height
@@ -50,25 +50,17 @@ PanelBase {
                 implicitWidth: parent.width
             }
         }
+
         StyledText {
             text: "Disks:"
             bottomPadding: - Config.padding
         }
-        Disk {
-            id: diskRoot
-            diskName: "root"
+        Repeater {
+            model: Config.general.disks
+            Disk {
+                diskName: modelData
+            }
         }
-
-        Disk {
-            id: diskHome
-            diskName: "home"
-        }
-
-        Disk {
-            id: diskHDD
-            diskName: "mnt/HDD"
-        }
-
         Rectangle {
             anchors.horizontalCenter: parent.horizontalCenter
             width: sysTray.width + Config.padding_small * 2
@@ -83,6 +75,8 @@ PanelBase {
             }
         }
 
-        TabBase {}
+        TabBase {
+            id:lastElement
+        }
     }
 }

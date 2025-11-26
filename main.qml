@@ -13,4 +13,5 @@ ShellRoot {
 
   ControlPanel {}
   DatePanel {}
+  PowerPanel {}
 }

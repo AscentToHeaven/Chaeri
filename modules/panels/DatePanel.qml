@@ -26,16 +26,25 @@ PanelBase {
         topPadding: Config.padding_large
         bottomPadding: (Config.visual.border.top / 2) - (lastElement.height / 2)
 
-        GridLayout {
+        ColumnLayout {
             anchors.left: parent.left
             anchors.right: parent.right
-            columns: 1
             StyledText {
                 id: monthTitle
                 text: "month"
                 font.pixelSize: Config.visual.fontSize * 2
-                font.underline: true
                 anchors.horizontalCenter: parent.horizontalCenter
+                bottomPadding: -20 // ??? idk why text is so weird but you get a HUGE gap without this
+            }
+            RowLayout {
+                Repeater {
+                    model: ["M", "T", "O", "T", "F", "L", "S"]
+                    StyledText {
+                        text: modelData
+                        Layout.fillWidth: true
+                        font.underline: true
+                    }
+                }
             }
             MonthGrid {
                 id: month

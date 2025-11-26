@@ -11,14 +11,12 @@ Item {
   width: text.width
   height: text.height
 
+  property real volumeRaw: AudioHandler.sink.audio.volume
+  property int volume: Math.round(volumeRaw * 100)
 
   StyledText {
     id: text
-    text: "   0%"
-
-    Component.onCompleted: {
-      text.text = "   "+Math.round((AudioHandler.sink.audio.volume * 100))+"%"
-    }
+    text: "   "+root.volume+"%"
 
     Item {
       anchors.fill: parent
@@ -52,6 +50,8 @@ Item {
       }
     }
   }
+
+  
 
   Connections {
     target: AudioHandler.sink.audio

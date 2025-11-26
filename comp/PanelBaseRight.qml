@@ -12,28 +12,31 @@ import QtQuick.Layouts
 
 PanelWindow {
     id: root
-    implicitHeight: body.height  + Config.padding_large
-    implicitWidth: body.width  + Config.padding_large * 2
+    implicitHeight: body.height  + Config.padding_large * 2
+    implicitWidth: body.width  + Config.padding_large
     // color: '#20ffffff'
     color: 'transparent'
     exclusionMode: ExclusionMode.Ignore
 
     default property alias content: body.data
-    property alias rootAnchors: root.anchors
-    property alias rootMargins: root.margins
+    property bool visibleOverride: false
     property alias root: root
     property alias body: body
-    property int top_margin: displayMA.containsMouse ?
-         0 :
-         0 - (body.height - Config.visual.border.top)
+    property int margin_visible: 0 - (body.width - Config.visual.border.right)
+    property int right_margin: this.visibleOverride ?
+        0-1 :
+        displayMA.containsMouse ?
+            0 -1 : 
+            this.margin_visible
+
     property int homeSize: 100
 
     anchors {
-        top: true
+        right: true
     }
 
     margins {
-        top: this.top_margin
+        right: this.right_margin
     }
 
     MouseArea {
@@ -48,7 +51,8 @@ PanelWindow {
         id: shadow
         anchors.fill: body
         radius: Config.visual.rounding.amount_small
-        spread:
+        spread: root.visibleOverride ?
+            3 :
             displayMA.containsMouse ?
                 3 :
                 -6
@@ -63,10 +67,11 @@ PanelWindow {
     StyledRectangle {
         id: body
         radius: 0
-        bottomRightRadius: Config.visual.rounding.amount_small
+        topLeftRadius: Config.visual.rounding.amount_small
         bottomLeftRadius: Config.visual.rounding.amount_small
         border.width: 0
-        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.right: parent.right
     }
 
     Connections {
@@ -93,7 +98,7 @@ PanelWindow {
         onTriggered: proc.running = true
     }
 
-    Behavior on top_margin {
+    Behavior on right_margin {
         NumberAnimation {
             duration: Config.anim
         }

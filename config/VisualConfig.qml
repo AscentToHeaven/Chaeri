@@ -18,7 +18,7 @@ JsonObject {
         property int left: 10
     }
 
-    property string wallpaper:`${Paths.stringify(Paths.profile)}/wallpaper.png`
+    property string wallpaper:`${Paths.strip(Paths.profile)}/wallpaper.png`
 
     property int fontSize: 12
     property bool fontItalic: false

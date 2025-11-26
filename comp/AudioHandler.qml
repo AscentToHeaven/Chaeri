@@ -3,6 +3,7 @@ import Quickshell
 import Quickshell.Io
 import QtQuick
 import Quickshell.Services.Pipewire
+import qs.utils
 
 Singleton {
   id: root
@@ -46,4 +47,13 @@ Singleton {
   function volDown(amount: real): void {
     setVol(volume - amount)
   }
+
+  function toggleSource(): void {
+    swapProc.running = true
+  }
+    Process {
+        id: swapProc
+        command: ["bash", `${Paths.strip(Paths.config)}/scripts/toggleaudio.sh`]
+        running: false
+    }
 }
